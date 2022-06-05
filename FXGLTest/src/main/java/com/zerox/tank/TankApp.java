@@ -26,6 +26,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -53,7 +54,7 @@ public class TankApp extends GameApplication {
 
         RIGHT(new Point2D(1, 0));
 
-        private Point2D p;
+        private final Point2D p;
 
         Dir(Point2D p) {
             this.p = p;
@@ -79,12 +80,35 @@ public class TankApp extends GameApplication {
     }
 
     @Override
+    protected void onPreInit() {
+        // 预先加载一些资源
+        // 设置游戏的初始化音量
+        FXGL.getSettings().setGlobalMusicVolume(0.5);
+        FXGL.getSettings().setGlobalSoundVolume(0.8);
+
+        FXGL.loopBGM("tankBgm.mp3");
+    }
+
+    @Override
     protected void initGameVars(Map<String, Object> vars) {
+        // int
         vars.put("score", 0);
+        // double
+        vars.put("x", 0.0);
+        // object
+        vars.put("list", new ArrayList<>());
+        // String
+        vars.put("name", "");
     }
 
     @Override
     protected void initGame() {
+        FXGL.getip("score").addListener(((observableValue, oldValue, newValue) -> {
+            if (newValue.intValue() > 20) {
+                FXGL.getNotificationService().pushNotification("哇，你好棒啊~");
+            }
+        }));
+
         shootTimer = FXGL.newLocalTimer();
         Canvas canvas = new Canvas(100, 100);
         GraphicsContext g2d = canvas.getGraphicsContext2D();
@@ -189,6 +213,7 @@ public class TankApp extends GameApplication {
                 if (!shootTimer.elapsed(shootDelay)) {
                     return;
                 }
+                FXGL.play("shoot.wav");
                 shootTimer.capture();
                 // 子弹实体
                 FXGL.entityBuilder()
@@ -215,6 +240,8 @@ public class TankApp extends GameApplication {
 //                FXGL.set("score", score);
                 FXGL.inc("score", 10);
 
+                FXGL.play("explode.wav");
+
                 bullet.removeFromWorld();
                 Point2D center = enemy.getCenter();
                 enemy.removeFromWorld();
@@ -236,8 +263,9 @@ public class TankApp extends GameApplication {
                 ft.setToValue(0);
                 ParallelTransition pt = new ParallelTransition(st, ft);
                 pt.play();
-
 //                pt.setOnFinished(actionEvent -> boom.removeFromWorld());
+
+                createEnemy();
             }
         });
     }
@@ -245,6 +273,6 @@ public class TankApp extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         isMoving = false;
-        System.out.println(FXGL.getGameWorld().getEntities().size());
+//        System.out.println(FXGL.getGameWorld().getEntities().size());
     }
 }
