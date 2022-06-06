@@ -1,0 +1,17 @@
+// 定义各个初始值
+p1.name=村长
+p1.image=chat/p1.png
+p2.name=勇者
+p2.image=chat/p2.png
+p3.name=MM
+p3.image=chat/p3.png
+
+# 聊天开始
+p1:大事不好了，有恶龙
+p2:真的假的？
+p3:应该是真的~ 我早上也听到了
+p2:那我去收拾它
+p1:我给你一个头盔，保护好自己
+p2.image=chat/p2pro.png
+p2:哇，谢谢村长
+p3:GG好酷，我好喜欢
