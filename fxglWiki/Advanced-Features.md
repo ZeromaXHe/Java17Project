@@ -1,0 +1,1 @@
+This section will show you how to make use of the advanced features. Please select of the subsections on the sidebar to the right (-->).
