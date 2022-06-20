@@ -3,7 +3,7 @@ package com.zerox.desktop.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.zerox.desktop.LibGdxDesktopTest;
+import com.zerox.desktop.Drop;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -17,6 +17,6 @@ public class HtmlLauncher extends GwtApplication {
 
     @Override
     public ApplicationListener createApplicationListener() {
-        return new LibGdxDesktopTest();
+        return new Drop();
     }
 }
